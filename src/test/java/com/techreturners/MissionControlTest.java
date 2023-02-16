@@ -10,24 +10,46 @@ import java.awt.Point;
 public class MissionControlTest {
 
     @Test
-    public void CreatePlateauMoveRover() {
-        Point p = new Point(7,7);
-        //GridMap grid = new GridMap(p);
-        Point p2;
-        //map map = new Map(p);
-        ControlRoom control = new MissionControl(p);
-
-        // Setup Plateau
+    public void CreatePlateauMoveRoverFirstTest() {
+        Plateau gridMap = new GridMap(new Point(7,7));
+        ControlRoom control = new MissionControl(gridMap);
 
         // Setup Position (of Mars Rover)
+        Point loc = new Point(1,2);
+        MarsVehicle rover = new Rover();
+        control.AddVehicle(loc, 'N');
 
         // Instruct Rover to move to a new position
+        String command = "LMLMLMLMM";
+        control.MoveRover(command);
 
-        // Check result .
+        Point expected = new Point(1,3);
+        assertEquals( expected, control.MarsRoverPosition());
 
-        //RomanNumeralsConverter romanNumeralsConverter = new RomanNumeralsConverter();
+        char direction = 'N';
+        assertEquals( direction, control.MarsRoverDirection());
+    }
 
-        //assertEquals( "I", romanNumeralsConverter.Convert(1));
+    @Test
+    public void CreatePlateauMoveRoverSecondTest() {
+        Plateau gridMap = new GridMap(new Point(5,5));
+        ControlRoom control = new MissionControl(gridMap);
+
+        // Setup Position (of Mars Rover)
+        Point loc = new Point(3,3);
+        MarsVehicle rover = new Rover();
+        control.AddVehicle(loc, 'E');
+
+        // Instruct Rover to move to a new position
+        String command = "MMRMMRMRRM";
+        control.MoveRover(command);
+
+        Point expected = new Point(5,1);
+        assertEquals( expected, control.MarsRoverPosition());
+
+        char direction = 'E';
+        assertEquals( direction, control.MarsRoverDirection());
+
     }
 
 }

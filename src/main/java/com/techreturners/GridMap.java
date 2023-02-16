@@ -15,6 +15,15 @@ abstract class Plateau {
         return false;
     };
 
+    public boolean isValid(Point position) {
+        // Check of position is in the occupied list
+        if (isOccupied(position))
+            return false;
+        if (outOfBounds(position))
+            return false;
+        return true;
+    }
+
     public boolean isOccupied(Point position) {
         // Check of position is in the occupied list
         for (int i = 0; i < occupied.length; i++) {
@@ -23,6 +32,9 @@ abstract class Plateau {
         }
         return false;
     }
+    public boolean outOfBounds(Point position) {
+        return (position.x < limit.x && position.y < limit.y);
+    }
 
 }
 
@@ -30,14 +42,4 @@ public class GridMap extends Plateau {
     GridMap(Point p) {
         super(p);
     }
-
-    public Boolean IsValidMove() {
-        return false;
-    }
-
-    public Boolean IsOccupied(Point p) {
-        return false;
-    }
-
-
 }
