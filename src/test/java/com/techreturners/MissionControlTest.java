@@ -33,7 +33,7 @@ public class MissionControlTest {
 
     @Test
     public void CreatePlateauMoveRoverSecondTest() {
-        Plateau gridMap = new GridMap(new Point(5,5));
+        Plateau gridMap = new GridMap(new Point(7,7));
         ControlRoom control = new MissionControl(gridMap);
 
         // Setup Position (of Mars Rover)

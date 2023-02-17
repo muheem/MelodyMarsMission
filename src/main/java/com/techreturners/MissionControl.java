@@ -40,8 +40,10 @@ public class MissionControl extends ControlRoom {
         // Add vehicle to the plateau
 
         // Check position free.
-        if (map.isValid(position))
-            return false;
+        if (map.isOccupied(position))
+            throw new IllegalStateException("Occupied position="+ position + " Cannot place Rover here.");
+        if (map.outOfBounds(position))
+            throw new IllegalStateException("Position beyond the map=" + position + " Cannot place Rover here.");
 
         rovers[0] = new Rover();
         rovers[0].setPosition(position);
@@ -56,8 +58,18 @@ public class MissionControl extends ControlRoom {
         for (char c : command.toCharArray()) {
             switch (c) {
                 case MOVE:
-                    map.isValid(rovers[0].nextMove());
-                    rovers[0].move();
+                    Point p = rovers[0].nextMove();
+                    if (map.outOfBounds(p)) {
+                        p = rovers[0].nextMoveBeyondLimit(map.limit);
+                        if (map.isOccupied(p))
+                            throw new IllegalStateException("Obstacle encountered="+ p + " Cannot move further.");
+                        rovers[0].moveBeyondLimit(map.limit);
+                    }
+                    else {
+                        if (map.isOccupied(p))
+                            throw new IllegalStateException("Obstacle encountered=" + p + " Cannot move further.");
+                        rovers[0].move();
+                    }
                     break;
                 case RIGHT:
                     rovers[0].turnRight();

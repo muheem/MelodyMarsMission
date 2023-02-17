@@ -6,13 +6,13 @@ enum Direction {
     NORTH, EAST, SOUTH, WEST;
 
     public Direction rotateRight() {
-        Direction d = values()[(ordinal() + 1) % 4];
-        return d;
+        return values()[(ordinal() + 1) % 4];
     }
-
+    public Direction rotate180() {
+        return values()[(ordinal() + 2) % 4];
+    }
     public Direction rotateLeft() {
-        Direction d =  values()[(ordinal() + 3) % 4];
-        return d;
+        return values()[(ordinal() + 3) % 4];
     }
 }
 
@@ -39,22 +39,59 @@ abstract class MarsVehicle {
         direction = direction.rotateRight();
     }
 
-    public void move() {
-            switch (direction) {
-                case NORTH:
-                    location.y += 1;
-                    break;
-                case EAST:
-                    location.x += 1;
-                    break;
-                case SOUTH:
-                    location.y -= 1;
-                    break;
-                case WEST:
-                    location.x -= 1;
-                    break;
-            }
+    public void wrap(Point limit) {
+        // We've reached the edge of the
+        switch (direction) {
+            case NORTH:
+                location.y = 0;
+                break;
+            case EAST:
+                location.x = 0;
+                break;
+            case SOUTH:
+                location.y = 0;
+                break;
+            case WEST:
+                location.x = 0;
+                break;
         }
+    }
+
+
+    public void move() {
+        switch (direction) {
+            case NORTH:
+                location.y += 1;
+                break;
+            case EAST:
+                location.x += 1;
+                break;
+            case SOUTH:
+                location.y -= 1;
+                break;
+            case WEST:
+                location.x -= 1;
+                break;
+        }
+    }
+    public void moveBeyondLimit(Point limit) {
+        // We've reached the edge , beyond lie dragons.
+        switch (direction) {
+            case NORTH:
+                location.y = 0;
+                break;
+            case EAST:
+                location.x = 0;
+                break;
+            case SOUTH:
+                location.y = limit.y - 1;
+                break;
+            case WEST:
+                location.x = limit.x - 1;
+                break;
+        }
+    }
+
 
     public Point nextMove() {
         Point next = new Point(location);
@@ -118,10 +155,29 @@ abstract class MarsVehicle {
                 break;
         }
     }
+
+    public Point nextMoveBeyondLimit(Point limit) {
+        // We've reached the edge , beyond lie dragons.
+        Point newPoint = new Point(location);
+        switch (direction) {
+            case NORTH:
+                newPoint.y = 0;
+                break;
+            case EAST:
+                newPoint.x = 0;
+                break;
+            case SOUTH:
+                newPoint.y = limit.y - 1;
+                break;
+            case WEST:
+                newPoint.x = limit.x - 1;
+                break;
+        }
+        return newPoint;
+    }
+
 }
 
 public class Rover extends MarsVehicle {
-        Rover() {
-            super();
-        }
+    Rover() { super(); }
 }

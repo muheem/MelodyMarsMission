@@ -1,4 +1,6 @@
-﻿5 5,1 2 N, LMLMLMLMM,1 3 N
-5 5, 3 3 E, MMRMMRMRRM, 5 1 E
-12 12, 6 7 S, MMMMMMLR, 6 1 S
 
+12 12, 3 3 E, MMRMMRMRRM, 5 1 E, Example test
+12 12, 6 7 S, MMMMMMLR, 6 1 S, Example test 2
+12 12, 1 2 N, LMLMLMLMMLLM, 1 2 S, First new test. Move rover to the edge
+4 4, 1 3 N, RRMMMM, 1 3 S, Assume wrapping.
+2 2, 0 0 N, MMM, 0 1 N, Out of bound. Rover wraps the map and carries on.

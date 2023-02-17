@@ -5,7 +5,7 @@ import java.awt.Point;
 
 
 abstract class Plateau {
-    Point limit;
+    public Point limit;
     Point[]  occupied = new Point[10];
 
     Plateau(Point p) {
@@ -33,7 +33,8 @@ abstract class Plateau {
         return false;
     }
     public boolean outOfBounds(Point position) {
-        return (position.x < limit.x && position.y < limit.y);
+        return (position.x >= limit.x || position.x < 0 ||
+                position.y >= limit.y || position.y < 0) ;
     }
 
 }
